@@ -66,6 +66,6 @@ UserSchema.methods.toAuthJSON = function(){
     }
 }
 //  registering schema 
-const User = mongoose.model('user', UserSchema);
+mongoose.model('user', UserSchema);
 // exporting schema
-module.exports = User;
+// module.exports = User;
