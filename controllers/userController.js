@@ -1,6 +1,6 @@
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const passport = require('passport');
-const auth = require('../routes/auth');
 
 exports.registerUser = (req,res,next) => {
     var user = new User();
@@ -38,3 +38,12 @@ exports.loginUser = (req,res,next) => {
         }
     })(req,res,next);
 }
+
+exports.getUser = (req,res,next) => {
+    User.findById(req.payload.id).then((user) => {
+        if(!user){
+            return res.sendStatus(401);
+        }
+        return res.json({ user : user.toAuthJSON() });
+    }).catch(next);
+};
