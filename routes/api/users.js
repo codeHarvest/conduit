@@ -9,5 +9,7 @@ router.post('/users/login', userController.loginUser);
 
 router.get('/user',auth.required , userController.getUser);
 
+router.put('/user', auth.required , userController.updateUser);
+
 module.exports = router;
 

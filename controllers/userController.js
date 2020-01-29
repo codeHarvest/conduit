@@ -47,3 +47,39 @@ exports.getUser = (req,res,next) => {
         return res.json({ user : user.toAuthJSON() });
     }).catch(next);
 };
+
+exports.updateUser = (req,res,next) => {
+
+    const { username, password, email, image, bio } = req.body.user;
+
+    User.findById(req.payload.id).then((user) => {
+        if(!user){
+            return res.sendStatus(401);
+        }
+        
+        if(typeof username !== 'undefined'){
+            user.username = username;
+        }
+
+        if(typeof email !== 'undefined'){
+            user.email = email;
+        }
+        
+        if(typeof password !== 'undefined'){
+            user.setPassword(password);
+        }
+
+        if(typeof image !== 'undefined'){
+            user.image = image;
+        }
+
+        if(typeof bio !== 'undefined'){
+            user.bio = bio;
+        }
+
+        return user.save().then(() => {
+            return res.json({ user: user.toAuthJSON() });
+        })
+    }).catch(next);
+
+};
